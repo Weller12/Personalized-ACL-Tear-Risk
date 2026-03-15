@@ -76,17 +76,13 @@
         <option value="ACL tear more than 12 months ago">ACL tear more than 12 months ago</option>
         <option value="Past lower limb surgery (Non-ACL)">Past lower limb surgery (Non-ACL)</option>
     </select>
-    <h2>If you have torn your ACL before, what type of graft did you receive?</h2>
-    <select id="graft type">
-        <option value="no past injury">N/A</option>
-        <option value="Patellar tendon autograft">Patellar tendon autograft</option>
-        <option value="Hamstring tendon autograft">Hamstring tendon autograft</option>
-    </select>
-    <h2>What type of floor surface do you play on?</h2>
+    <h2>What type of floor surface do you practice/play on?</h2>
     <select id="floor surface">
-        <option value="N/A">N/A (I play outdoors or on a surface not listed)</option>
+        <option value="Natural grass">Natural grass</option>
+        <option value="Artificial turf">Artificial turf</option>
         <option value="artifical floor">Artificial floor (e.g., hard court, gym floor)</option>
         <option value="wooden floor">Wooden floor (e.g., hardwood, parquet)</option>
+        
     </select>
     <h2> Check all that apply:</h2>
         <div class="checkbox-group">
@@ -97,6 +93,16 @@
     <div class="checkbox-group">
         <input type="checkbox" id="climate">
         <label for="climate">I live in a dry/low-rainfall climate</label>
+    </div>
+    
+    <div class="checkbox-group">
+        <input type="checkbox" id="age">
+        <label for="age">I am under 20 years old and have previously torn my ACL</label>
+    </div>
+    
+    <div class="checkbox-group">
+        <input type="checkbox" id="shoes">
+        <label for="shoes">I wear cleats or shoes with studs</label>
     </div>
 
     <div style="text-align:center">
@@ -111,29 +117,61 @@
     function calculateRisk() {
     const sex = document.getElementById('sex').value;
     const sport = document.getElementById('sport').value;
+    const injuryHistory = document.getElementById('injury history').value;
+    const floorSurface = document.getElementById('floor surface').value;
     const family = document.getElementById('family').checked;
+    const climate = document.getElementById('climate').checked;
+    const age = document.getElementById('age').checked;
+    const shoes = document.getElementById('shoes').checked;
     let score = 1.0;
-    if (sex === 'female') {
-        score *= 2.0;}
+    if (sex === 'female' && sport === 'basketball') {
+        score *= 24.78;}
+    if (sex === 'female' && sport === 'soccer') {
+        score *= 18.9036;}
+    if (sex === 'female' && sport === 'lacrosse') {
+        score *= 8.3544;}
+    if (sex === 'female' && sport === 'handball') {
+        score *= 22.7268;}
+    if (sex === 'female' && sport === 'non-cutting sport') {
+        score *= 2.64;}
+    if (sex === 'female' && sport === 'other cutting sport') {
+        score *= 18.6912;}
+
+    if (injuryHistory === 'ACL tear in the past 12 months') {
+        score *= 11.33;}
+    if (injuryHistory === 'ACL tear more than 12 months ago') {
+        score *= 4.44;}
+    if (injuryHistory === 'Past lower limb surgery (Non-ACL)') {
+        score *= 3.65;}
+
+    if (floorSurface === 'Natural grass') {
+        score *= 1.26;}
+    if (floorSurface === 'artificial floor') {
+        score *= 2.35;}
+
     if (family) {
-        score *= 1.5;}
-    if (sport === 'cutting sport') {
-        score *= 1.2;}
-    document.getElementById('risk').innerText = score + "x";
+        score *= 2.24;}
+    if (climate) {
+        score *= 2.87;}
+    if (age) {
+        score *= 3.71;}
+    if (shoes) {
+        score *= 2.57;}
+    document.getElementById('risk').innerText = Math.round(score) + "x";
     document.getElementById('risk').style.display = 'block';
-    if (score >= 3.0) {
+    if (score >= 50.0) {
         const highRiskMessage = document.createElement('h2');
         highRiskMessage.style.color = 'red';
         highRiskMessage.style.textAlign = 'center';
         highRiskMessage.innerText = "High Risk";
         document.getElementById('risk').appendChild(highRiskMessage);}
-    if (score > 1.0 && score < 3.0) {
+    if (score > 10.0 && score < 50.0) {
         const moderateRiskMessage = document.createElement('h2');
         moderateRiskMessage.style.color = 'orange';
         moderateRiskMessage.style.textAlign = 'center';
         moderateRiskMessage.innerText = "Moderate Risk";
         document.getElementById('risk').appendChild(moderateRiskMessage);}
-    if (score <= 1.0) {
+    if (score <= 10.0) {
         const lowRiskMessage = document.createElement('h2');
         lowRiskMessage.style.color = 'green';
         lowRiskMessage.style.textAlign = 'center';
