@@ -124,8 +124,9 @@
     const age = document.getElementById('age').checked;
     const shoes = document.getElementById('shoes').checked;
     let score = 1.0;
-    if (sport === 'soccer' || sport === 'basketball' || sport === 'lacrosse' || sport === 'handball' || sport === 'other cutting sport') {
+    if (sex === 'male' && (sport === 'basketball' || sport === 'soccer' || sport === 'lacrosse' || sport === 'handball' || sport === 'other cutting sport')) {
         score *= 7.08;}
+
     if (sex === 'female' && sport === 'basketball') {
         score *= 24.78;}
     if (sex === 'female' && sport === 'soccer') {
