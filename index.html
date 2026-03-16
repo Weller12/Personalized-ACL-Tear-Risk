@@ -161,13 +161,13 @@
         score *= 2.57;}
     document.getElementById('risk').innerText = Math.round(score) + "x";
     document.getElementById('risk').style.display = 'block';
-    if (score >= 50.0) {
+    if (score >= 100.0) {
         const highRiskMessage = document.createElement('h2');
         highRiskMessage.style.color = 'red';
         highRiskMessage.style.textAlign = 'center';
         highRiskMessage.innerText = "High Risk";
         document.getElementById('risk').appendChild(highRiskMessage);}
-    if (score > 10.0 && score < 50.0) {
+    if (score > 10.0 && score < 100.0) {
         const moderateRiskMessage = document.createElement('h2');
         moderateRiskMessage.style.color = 'orange';
         moderateRiskMessage.style.textAlign = 'center';
